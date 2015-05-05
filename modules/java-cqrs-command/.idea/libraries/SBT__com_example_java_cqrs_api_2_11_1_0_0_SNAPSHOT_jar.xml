@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SBT: com.example:java-cqrs-api_2.11:1.0.0-SNAPSHOT:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/local/com.example/java-cqrs-api_2.11/1.0.0-SNAPSHOT/jars/java-cqrs-api_2.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
