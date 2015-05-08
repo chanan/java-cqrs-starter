@@ -45,16 +45,15 @@ public class GameActor extends AbstractLoggingActor {
         //Queries
         private ActorRef teamsQuery;
         private ActorRef playersQuery;
-        private final ActorRef sender;
 
         public static Props props() {
             return Props.create(Worker.class);
         }
 
         public Worker() {
-            sender = sender();
             receive(
                     ReceiveBuilder.matchAny(request -> {
+                        final ActorRef sender = sender();
                         playersQuery.tell(request, self());
                         context().become(
                                 ReceiveBuilder.matchAny(response -> {
