@@ -16,7 +16,7 @@ import java.util.Optional;
 public class PlayerActor extends AbstractPersistentActor {
     private final ActorRef playerNormalizer = context().actorOf(PlayerNormalizedActor.props());
     private Optional<Player> player = Optional.empty();
-    private ActorRef teamsRegion;
+    private ActorRef teamsRegion = ClusterSharding.get(context().system()).shardRegion("TeamsRegion");
 
     public static Props props() {
         return Props.create(PlayerActor.class);
@@ -62,11 +62,5 @@ public class PlayerActor extends AbstractPersistentActor {
     @Override
     public String persistenceId() {
         return "Player-" + self().path().name();
-    }
-
-    @Override
-    public void preStart() throws Exception {
-        teamsRegion = ClusterSharding.get(context().system()).shardRegion("TeamsRegionCommand");
-        super.preStart();
     }
 }

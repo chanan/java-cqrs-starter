@@ -22,17 +22,18 @@ public class PlayerViewActor extends AbstractPersistentView {
     public PlayerViewActor() {
         receive(
                 ReceiveBuilder.match(Object.class, p -> isPersistent() && p instanceof Events.NewPlayerCreated, persistent -> {
+                    log.info("Player recreated!");
                     Events.NewPlayerCreated e = (Events.NewPlayerCreated) persistent;
                     player = Optional.of(new Player(e.teamName, e.jerseyNumber, e.name));
                 }).match(Object.class, p -> isPersistent() && p instanceof Events.PlayerScored, persistent -> {
+                    log.info("Player Scored");
                     Events.PlayerScored e = (Events.PlayerScored) persistent;
-                    player.ifPresent( thePlayer ->
-                        thePlayer.score(e.score)
+                    player.ifPresent(thePlayer ->
+                                    thePlayer.score(e.score)
                     );
-                }).match(Queries.PlayerNameRequest.class, request -> {
-                    log.info("Query!");
-                    log.info("Sender: " + sender());
-                    sender().tell(new Queries.PlayerNameResponse(request, player.get().getName()), self());
+                }).match(Queries.PlayerRowRequest.class, request -> {
+                    Player thePlayer = player.orElse(new Player(null, -1, null));
+                    sender().tell(new Queries.PlayerRowResponse(request, thePlayer.getName(), thePlayer.getPoints()), self());
                 }).build()
         );
     }
