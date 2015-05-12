@@ -3,8 +3,11 @@ package com.example.protocols;
 import java.io.Serializable;
 
 public class Commands {
+    public static class Command implements Serializable {
 
-    public static class TeamCommand implements Serializable {
+    }
+
+    public static class TeamCommand extends Command {
         public final String teamName;
 
         public TeamCommand(String teamName) {
@@ -20,7 +23,6 @@ public class Commands {
             this.jerseyNumber = jerseyNumber;
         }
     }
-
 
     public static final class NewTeam extends TeamCommand {
         public NewTeam(String teamName) {

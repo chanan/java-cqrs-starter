@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 public class Queries {
 
-    public static class TeamRequest implements Serializable{
+    public static class Request implements Serializable { }
+
+    public static class TeamRequest extends Request {
         public final String teamName;
 
         public TeamRequest(String teamName) {
@@ -37,32 +39,19 @@ public class Queries {
         }
     }
 
-    public static final class PlayerNameRequest extends PlayerRequest {
-        public PlayerNameRequest(String teamName, int jerseyNumber) {
+    public static final class PlayerRowRequest extends PlayerRequest {
+        public PlayerRowRequest(String teamName, int jerseyNumber) {
             super(teamName, jerseyNumber);
         }
     }
 
-    public static final class PlayerNameResponse extends PlayerResponse {
+    public static final class PlayerRowResponse extends PlayerResponse {
         public final String name;
-
-        public PlayerNameResponse(PlayerRequest request, String name) {
-            super(request);
-            this.name = name;
-        }
-    }
-
-    public static final class PlayerScoreRequest extends PlayerRequest {
-        public PlayerScoreRequest(String teamName, int jerseyNumber) {
-            super(teamName, jerseyNumber);
-        }
-    }
-
-    public static final class PlayerScoreResponse extends PlayerResponse {
         public final int score;
 
-        public PlayerScoreResponse(PlayerRequest request, int score) {
+        public PlayerRowResponse(PlayerRequest request, String name, int score) {
             super(request);
+            this.name = name;
             this.score = score;
         }
     }
